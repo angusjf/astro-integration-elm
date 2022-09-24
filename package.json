@@ -1,0 +1,22 @@
+{
+  "name": "@example/basics",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/vue": "^1.0.2",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "astro": "^1.2.6",
+    "canvas": "^2.10.1",
+    "elm-pages": "^2.1.11",
+    "jsdom": "^20.0.0",
+    "vite-plugin-elm": "^2.7.2"
+  }
+}
