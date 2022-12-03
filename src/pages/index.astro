@@ -2,32 +2,25 @@
 import Test from "../components/Test.elm";
 ---
 <html>
+  <html>
+    <meta name="color-scheme" content="dark light">
+  </html>
   <body>
     <main>
       <h1>Astro and Elm:</h1>
-      <Test />
+      <Test client:only />
     </main>
   </body>
 </html>
 
 <style>
-  h1 {
-    margin: 2rem 0;
+  :root {
+    font-family: Helvetica, Arial, sans-serif;
   }
 
   main {
     margin: auto;
     padding: 1em;
     max-width: 60ch;
-  }
-
-  .text-gradient {
-    font-weight: 900;
-    background-image: linear-gradient(0deg, #4f39fa, #da62c4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 100% 200%;
-    background-position-y: 100%;
-    border-radius: 0.4rem;
   }
 </style>

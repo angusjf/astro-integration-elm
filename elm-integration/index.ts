@@ -6,11 +6,12 @@ export default function (): AstroIntegration {
   return {
     name: "elm",
     hooks: {
-      "astro:config:setup": ({ addRenderer, updateConfig }) => {
+      "astro:config:setup": ({ addRenderer, updateConfig, addPageExtension }) => {
+        addPageExtension('.elm');
         addRenderer({
           name: "elm",
           serverEntrypoint: "./elm-integration/elm-server.js",
-          // clientEntrypoint: "./elm-integration/elm-client.js",
+          clientEntrypoint: "./elm-integration/elm-client.js",
         });
         updateConfig({
           vite: { plugins: [elmPlugin({debug: false, optimize: false})] }
@@ -21,14 +22,18 @@ export default function (): AstroIntegration {
 }
 
 const elmPlugin = (_) => {
-  return {
+  let MINE = {
     name: 'elm',
-    transform(code, id) {
+    enforce: 'pre',
+    api: {},
+    async load(id, _) {
       if (!id.endsWith('.elm')) return;
       const out = toESModule(elm.compileToStringSync(id, {}));
-      console.log(out)
+      console.log("___________ ->", id)
       return `
-      global.document = {}
+      if (!document) {
+        global.document = {}
+      }
       ${out}      
       export default {
         $$elm: true,
@@ -37,4 +42,6 @@ const elmPlugin = (_) => {
       `
     }
   };
+
+  return MINE;
 }
