@@ -1,6 +1,7 @@
 # build output
 dist/
 .output/
+elm-stuff/
 
 # dependencies
 node_modules/
