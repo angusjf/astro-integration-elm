@@ -1,14 +1,14 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { Elm } from "../elm/Test.elm";
+import Test from "../components/Test.elm";
 ---
-
-<Layout title="Welcome to Astro.">
-  <main>
-    <h1>Astro and Elm:</h1>
-    <Elm client:load />
-  </main>
-</Layout>
+<html>
+  <body>
+    <main>
+      <h1>Astro and Elm:</h1>
+      <Test />
+    </main>
+  </body>
+</html>
 
 <style>
   h1 {

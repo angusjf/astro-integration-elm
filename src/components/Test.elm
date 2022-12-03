@@ -2,8 +2,8 @@ module Test exposing (main)
 
 import Browser
 import Debug exposing (toString)
-import Html exposing (button, div, ol, span, text)
-import Html.Attributes exposing (class, style)
+import Html exposing (button, div, ol, text)
+import Html.Attributes exposing (style)
 import Html.Events exposing (onClick)
 
 

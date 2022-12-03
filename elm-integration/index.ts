@@ -1,11 +1,8 @@
 import { AstroIntegration } from "astro";
-import elmPlugin from "vite-plugin-elm";
-
-const viteConfiguration = { plugins: [elmPlugin()] };
+import * as elm from 'node-elm-compiler';
+import { toESModule } from 'elm-esm';
 
 export default function (): AstroIntegration {
-  // @ts-ignore
-  global.document = {};
   return {
     name: "elm",
     hooks: {
@@ -13,12 +10,31 @@ export default function (): AstroIntegration {
         addRenderer({
           name: "elm",
           serverEntrypoint: "./elm-integration/elm-server.js",
-          clientEntrypoint: "./elm-integration/elm-client.js",
+          // clientEntrypoint: "./elm-integration/elm-client.js",
         });
         updateConfig({
-          vite: viteConfiguration,
+          vite: { plugins: [elmPlugin({debug: false, optimize: false})] }
         });
       },
     },
+  };
+}
+
+const elmPlugin = (_) => {
+  return {
+    name: 'elm',
+    transform(code, id) {
+      if (!id.endsWith('.elm')) return;
+      const out = toESModule(elm.compileToStringSync(id, {}));
+      console.log(out)
+      return `
+      global.document = {}
+      ${out}      
+      export default {
+        $$elm: true,
+        ...Elm[Object.keys(Elm)[0]]
+      }
+      `
+    }
   };
 }

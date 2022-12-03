@@ -1,5 +1,5 @@
 {
-  "name": "@example/basics",
+  "name": "elm-astro-example",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -16,8 +16,10 @@
     "@vitejs/plugin-vue": "^3.1.0",
     "astro": "^1.2.6",
     "canvas": "^2.10.1",
-    "elm-pages": "^2.1.11",
+    "elm": "^0.19.1-5",
+    "elm-esm": "^1.1.4",
     "jsdom": "^20.0.3",
+    "node-elm-compiler": "^5.0.6",
     "vite-plugin-elm": "^2.7.2",
     "vue": "^3.2.39"
   }
