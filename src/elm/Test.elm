@@ -1,11 +1,41 @@
 module Test exposing (main)
 
-import Html exposing (ol, span, text)
+import Browser
+import Debug exposing (toString)
+import Html exposing (button, div, ol, span, text)
 import Html.Attributes exposing (class, style)
+import Html.Events exposing (onClick)
 
 
 main =
-    ol [] <| List.map listItem data
+    Browser.sandbox
+        { init = 9
+        , view = view
+        , update = update
+        }
+
+
+type Msg
+    = Inc
+    | Dec
+
+
+update msg n =
+    case msg of
+        Inc ->
+            n + 1
+
+        Dec ->
+            n - 1
+
+
+view n =
+    div []
+        [ ol [] <| List.map listItem data
+        , text <| toString n
+        , button [ onClick Inc ] [ text "+" ]
+        , button [ onClick Dec ] [ text "-" ]
+        ]
 
 
 data =
