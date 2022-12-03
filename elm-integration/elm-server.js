@@ -1,4 +1,4 @@
-// import { JSDOM } from "jsdom";
+import { JSDOM } from "jsdom";
 // import * as jsdom from "jsdom";
 
 function check(Component) {
@@ -6,34 +6,35 @@ function check(Component) {
 }
 
 async function renderToStaticMarkup(Component, props, slotted) {
-  let html = "";
+  const dom = new JSDOM(`
+    <html>
+      <head>
+      </head>
+      <body>
+        <div id="app"></div>
+      </body>
+    </html>
+  `);
+  const document = dom.window.document;
 
-  const node = {};
-  node.appendChild = (n) => {
-    // console.log("appendChild", n);
+  global.document.replaceChild = document.replaceChild;
+  global.document.createTextNode = (...x) =>{
+    console.log('createTextNode', x)
+    let e = document.createTextNode(...x);
+    return e;
   };
-  node.replaceChild = (a, b) => {
-    // console.log("replaceChild", { a, b });
-    html += `<${a.element} class="${a.className}">${"Elm"}</span>`;
-    return node;
-  };
-  node.parentNode = node;
+  global.document.createElement = (...x) => {
+    console.log(x);
+    let e = document.createElement(...x);
+    console.log(e);
+    return e;
+  }
 
-  global.document.createTextNode = (text) => {
-    // console.log({ textNode });
-    // html += textNode;
-    return { ...node, text };
-  };
+  Component[Object.keys(Component)[0]].init({
+    node: document.getElementById('app')
+  });
 
-  global.document.createElement = (element) => {
-    // console.log({ element });
-    // html += `<${element}>`;
-    return { ...node, element };
-  };
-
-  Component[Object.keys(Component)[0]].init({ node });
-
-  return { html };
+  return { html: dom.serialize() };
 }
 
 export default {

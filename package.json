@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@astrojs/vue": "^1.0.2",
+    "@types/jsdom": "^20.0.1",
     "@vitejs/plugin-vue": "^3.1.0",
     "astro": "^1.2.6",
     "canvas": "^2.10.1",
     "elm-pages": "^2.1.11",
-    "jsdom": "^20.0.0",
-    "vite-plugin-elm": "^2.7.2"
+    "jsdom": "^20.0.3",
+    "vite-plugin-elm": "^2.7.2",
+    "vue": "^3.2.39"
   }
 }
