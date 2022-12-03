@@ -31,9 +31,9 @@ const elmPlugin = (_) => {
       const out = toESModule(elm.compileToStringSync(id, {}));
       console.log("___________ ->", id)
       return `
-      if (!document) {
+      try {
         global.document = {}
-      }
+      } catch (e) {}
       ${out}      
       export default {
         $$elm: true,
