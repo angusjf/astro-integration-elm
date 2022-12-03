@@ -1,8 +1,19 @@
 module Test exposing (main)
 
-import Html exposing (span, text)
-import Html.Attributes exposing (class)
+import Html exposing (ol, span, text)
+import Html.Attributes exposing (class, style)
 
 
 main =
-    span [ class "text-gradient" ] [ text "Elm" ]
+    ol [] <| List.map listItem data
+
+
+data =
+    [ "astro", "islands", "architecture" ]
+
+
+listItem : String -> Html.Html msg
+listItem s =
+    Html.li
+        [ style "font-weight" "bold" ]
+        [ Html.text s ]
