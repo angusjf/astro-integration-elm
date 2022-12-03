@@ -17,26 +17,19 @@ async function renderToStaticMarkup(Component, props, slotted) {
   };
 
   global.document.createTextNode = (...x) =>{
-    // console.log('createTextNode', x)
-    let e = document.createTextNode(...x);
-    return e;
+    return document.createTextNode(...x);
   };
 
   global.document.createElement = (...x) => {
-    // console.log(x);
-    let e = document.createElement(...x);
-    // console.log(e);
-    return e;
+    return document.createElement(...x);
   };
 
   Component.init({
     node: document.getElementById('app')
   });
 
-  const html = dom.serialize()
-
   return {
-    html
+    html: dom.serialize()
   };
 }
 
