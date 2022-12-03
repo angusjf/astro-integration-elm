@@ -25,7 +25,8 @@ async function renderToStaticMarkup(Component, props, slotted) {
   };
 
   Component.init({
-    node: document.getElementById('app')
+    node: document.getElementById('app'),
+    flags: props
   });
 
   return {

@@ -4,7 +4,8 @@ export default (target) => {
     console.log({ Component, props, slotted });
     if (!target.hasAttribute('ssr')) return;
     Component.init({
-      node: target
+      node: target,
+      flags: props
     })
     // new Component({
     //   target,
