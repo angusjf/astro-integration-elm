@@ -146,3 +146,5 @@ The `unsafeSetup` function is evaluated **in the client's browser** with `eval`.
 This can be a **huge security vulnerability**. Do not allow interpolate user-generated, external or unescaped content into the `unsafeSetup` prop.
 
 🚨 I repeat - **do not** put anything except trusted code in this string.
+
+Much like Astro's [`set:html`](https://docs.astro.build/en/reference/directives-reference/#sethtml) or React's `dangerouslySetInnerHTML`, this opens you up to XSS attacks.
