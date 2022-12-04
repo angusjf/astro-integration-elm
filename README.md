@@ -110,3 +110,41 @@ view count =
       , button [ onClick Dec ] [ text "-" ]
       ]
 ```
+
+### Advanced: Using `ports`
+
+Elm's ports are a great way to use web APIs that aren't available in Elm.
+
+However, Astro [doesn't allow passing functions to hybrid props](https://guide.elm-lang.org/interop/ports.html).
+
+The (less than ideal) solution I offer is to use the `unsafeSetup` prop.
+
+**This is highly dangerous!**
+
+```jsx
+<Test
+  client:load
+  // CALLED UNSAFE FOR A REASON: Please read the docs before use.
+  unsafeSetup={`(app) => {
+    var socket = new WebSocket('wss://echo.websocket.org')
+
+    app.ports.sendMessage.subscribe(function(message) {
+        socket.send(message);
+    })
+
+    socket.addEventListener("message", (event) => {
+        app.ports.messageReceiver.send(event.data);
+    })
+  }`}
+/>
+```
+
+Here we can establish an (incoming and outgoing) websocket connection to the server with the `unsafeSetup` function.
+
+The `unsafeSetup` function is evaluated **in the client's browser** with `eval`.
+
+This can be a **huge security vulnerability**. Do not allow interpolate user-generated, external or unescaped content into the `unsafeSetup` prop.
+
+🚨 I repeat - **do not** put anything except trusted code in this string.
+
+If you've used *Next.js*, the same rules apply as `dangerouslySetInnerHTML`.
