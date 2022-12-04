@@ -146,5 +146,3 @@ The `unsafeSetup` function is evaluated **in the client's browser** with `eval`.
 This can be a **huge security vulnerability**. Do not allow interpolate user-generated, external or unescaped content into the `unsafeSetup` prop.
 
 🚨 I repeat - **do not** put anything except trusted code in this string.
-
-If you've used *Next.js*, the same rules apply as `dangerouslySetInnerHTML`.
