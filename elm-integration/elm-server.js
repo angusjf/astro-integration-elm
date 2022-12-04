@@ -24,6 +24,14 @@ async function renderToStaticMarkup(Component, props, slotted) {
     return document.createElement(...x);
   };
 
+  global.document.createDocumentFragment = (...x) => {
+    return document.createDocumentFragment (...x);
+  };
+
+  global.document.body = document.body;
+
+  global.document.title = document.title;
+  
   Component.init({
     node: document.getElementById('app'),
     flags: props

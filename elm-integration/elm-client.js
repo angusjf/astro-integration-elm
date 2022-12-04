@@ -1,12 +1,17 @@
 export default (target) => {
   console.log({ target });
-  return (Component, props, slotted, { client }) => {
+  return (Component, { setup: unsafeSetup, ...props }, slotted, { client }) => {
     console.log({ Component, props, slotted });
+
     if (!target.hasAttribute('ssr')) return;
-    Component.init({
+
+    const app = Component.init({
       node: target,
       flags: props
     })
+
+    eval(unsafeSetup)(app);
+
     // new Component({
     //   target,
     //   props: {
