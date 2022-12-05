@@ -1,27 +1,15 @@
 {
-  "name": "elm-astro-example",
+  "name": "elm-astro-integration",
   "type": "module",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "build": "tsc"
   },
   "dependencies": {
-    "@astrojs/vue": "^1.0.2",
-    "@types/jsdom": "^20.0.1",
-    "@vitejs/plugin-vue": "^3.1.0",
-    "astro": "^1.2.6",
-    "canvas": "^2.10.1",
     "elm": "^0.19.1-5",
     "elm-esm": "^1.1.4",
     "jsdom": "^20.0.3",
     "node-elm-compiler": "^5.0.6",
-    "vite-plugin-elm": "^2.7.2",
-    "vue": "^3.2.39",
     "xmlhttprequest": "^1.8.0"
   }
 }
