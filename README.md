@@ -20,7 +20,7 @@ npm install elm
 
 Now, apply this integration to your `astro.config.*` file using the `integrations` property:
 
-__`astro.config.mjs`__
+_astro.config.mjs_
 
 ```js
 import elm from 'astro-integration-elm';
@@ -30,13 +30,6 @@ export default {
   integrations: [elm()],
 }
 ```
-
-## Getting started
-
-To use your first Elm component in Astro, head to our [UI framework documentation](https://docs.astro.build/en/core-concepts/framework-components/). You'll explore:
-- 📦 how framework components are loaded,
-- 💧 client-side hydration options, and
-- 🤝 opportunities to mix and nest frameworks together
 
 ## First Steps
 
@@ -62,5 +55,12 @@ import Html
 main = Html.text "Hello world"
 ```
 
-## Next Steps
+## Getting started with Astro
+
+To learn the Astro's concepts, head to the [UI framework documentation](https://docs.astro.build/en/core-concepts/framework-components/). You'll explore:
+- 📦 how framework components are loaded,
+- 💧 client-side hydration options, and
+- 🤝 opportunities to mix and nest frameworks together
+
+## Documentation
 ➡️ For some more interesting examples, see the [guide in the docs](docs/guide.md).
