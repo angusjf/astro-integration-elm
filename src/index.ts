@@ -13,22 +13,23 @@ export default function (): AstroIntegration {
           clientEntrypoint: "./elm-integration/elm-client.js",
         });
         updateConfig({
-          vite: { plugins: [elmPlugin({debug: false, optimize: false})] }
+          vite: { plugins: [elmPlugin()] }
         });
       },
     },
   };
 }
 
-const elmPlugin = (_) => {
-  let MINE = {
+function elmPlugin(compilerOptions = {}) {
+  return {
     name: 'elm',
     enforce: 'pre',
     api: {},
     async load(id, _) {
       if (!id.endsWith('.elm')) return;
-      const out = toESModule(elm.compileToStringSync(id, {}));
-      console.log("___________ ->", id)
+
+      const out = toESModule(elm.compileToStringSync(id, compilerOptions));
+
       return `
       try {
         global.document = {}
@@ -42,6 +43,4 @@ const elmPlugin = (_) => {
       `
     }
   };
-
-  return MINE;
 }
