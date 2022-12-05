@@ -1,6 +1,6 @@
-⚠️ Warning: This is under construction!
+⚠️ Warning: This is under construction! Package still yet to be published
 
-# astro-integration-elm (@astrojs/elm candidate) 🌳
+# astro-integration-elm 🌳
 
 This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** enables server-side rendering and client-side hydration for your [Elm](https://elm-lang.org/) components.
 
