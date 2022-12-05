@@ -27,7 +27,8 @@
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
-    "astro": "^1.6.12"
+    "astro": "^1.6.12",
+    "vite": "^3.2.5"
   },
   "peerDependencies": {
     "elm": "^0.19.1-5"
