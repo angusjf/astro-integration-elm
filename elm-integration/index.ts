@@ -6,8 +6,7 @@ export default function (): AstroIntegration {
   return {
     name: "elm",
     hooks: {
-      "astro:config:setup": ({ addRenderer, updateConfig, addPageExtension }) => {
-        addPageExtension('.elm');
+      "astro:config:setup": ({ addRenderer, updateConfig }) => {
         addRenderer({
           name: "elm",
           serverEntrypoint: "./elm-integration/elm-server.js",
@@ -33,6 +32,7 @@ const elmPlugin = (_) => {
       return `
       try {
         global.document = {}
+        global.XMLHttpRequest = {}
       } catch (e) {}
       ${out}      
       export default {

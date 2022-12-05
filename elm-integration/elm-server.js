@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { XMLHttpRequest } from "xmlhttprequest";
 
 function check(Component) {
   return Component.$$elm;
@@ -31,6 +32,8 @@ async function renderToStaticMarkup(Component, props, slotted) {
   global.document.body = document.body;
 
   global.document.title = document.title;
+
+  global.XMLHttpRequest = XMLHttpRequest;
   
   Component.init({
     node: document.getElementById('app'),
