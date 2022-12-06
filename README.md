@@ -1,12 +1,10 @@
-⚠️ Warning: This is under construction! Package still yet to be published
-
 # astro-integration-elm 🌳
 
 This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide/)** enables server-side rendering and client-side hydration for your [Elm](https://elm-lang.org/) components.
 
 ## Installation
 
-First, install the `astro-integration-elm` package:
+First, once you have [set up your Astro project](https://docs.astro.build/en/getting-started/#start-your-first-project), install the `astro-integration-elm` package:
 
 ```sh
 npm install astro-integration-elm
