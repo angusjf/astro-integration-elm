@@ -23,12 +23,11 @@ Now, apply this integration to your `astro.config.*` file using the `integration
 _astro.config.mjs_
 
 ```diff
-+import elm from "astro-integration-elm";
++ import elm from "astro-integration-elm";
 
-export default {
-  // ...
-+ integrations: [elm()],
-};
+  export default defineConfig({
++    integrations: [elm()],
+  });
 ```
 
 Finally, run `elm init` to create an `elm.json`, and change `source-directories` to reflect the directories you plan to put your Elm components in.
@@ -40,10 +39,10 @@ npx elm init
 _elm.json_
 
 ```diff
-  "source-directories": [
-+   "src"
--   "src/components"
-  ],
+    "source-directories": [
++     "src"
+-     "src/components"
+    ],
 ```
 
 (If you're using `git` you should probably also add the `elm-stuff` folder to your `.gitignore`)
