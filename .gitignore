@@ -1,5 +1,7 @@
 # build output
 dist/
+index.js
+index.d.ts
 
 # dependencies
 node_modules/

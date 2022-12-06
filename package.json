@@ -17,6 +17,13 @@
     "elm"
   ],
   "bugs": "https://github.com/angusjf/elm-astro-integration/issues",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "elm-server.js",
+    "elm-client.js",
+    "index.js"
+  ],
   "scripts": {
     "build": "tsc"
   },
