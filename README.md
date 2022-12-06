@@ -98,4 +98,4 @@ If you're not already familiar with Elm, a great place to start is the [Official
 
 ### More about the Elm Astro Integration
 
-➡️ For some more interesting examples of `astro-integration-elm`, see the [guide in the docs](docs/guide.md) or check out the [announcement post on my blog](https://www.angusjf.com/elm-astro).
+➡️ For some more interesting examples of `astro-integration-elm`, see the [guide in the docs](docs/guide.md) or check out the [announcement post on my blog](https://www.angusjf.com/astro-integration-elm).

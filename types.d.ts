@@ -16,15 +16,17 @@ declare module "node-elm-compiler" {
 
   export type ElmCompilerOptions = Partial<Record<ElmCompilerOption, unknown>>;
 
-  function compileToStringSync(
-    elmSource: string,
-    elmCompilerOptions: ElmCompilerOptions
-  ): string;
+  export default {
+    compileToStringSync: (
+      elmSource: string,
+      elmCompilerOptions: ElmCompilerOptions
+    ) => string,
 
-  async function compileToString(
-    filename: string,
-    elmCompilerOptions: ElmCompilerOptions
-  ): Promise<string>;
+    compileToString: async (
+      filename: string,
+      elmCompilerOptions: ElmCompilerOptions
+    ) => Promise<string>,
+  };
 }
 
 declare module "elm-esm" {

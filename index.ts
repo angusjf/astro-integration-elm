@@ -1,12 +1,15 @@
 import { AstroIntegration } from "astro";
-import { ElmCompilerOptions, compileToString } from "node-elm-compiler";
+import type { ElmCompilerOptions } from "node-elm-compiler";
+import nodeElm from "node-elm-compiler";
 import { toESModule } from "elm-esm";
 import { Connect, Plugin } from "vite";
+
+const { compileToString } = nodeElm;
 
 export default (
   elmCompilerOptions: ElmCompilerOptions = {}
 ): AstroIntegration => ({
-  name: "elm-astro-integration",
+  name: "astro-integration-elm",
   hooks: {
     "astro:server:setup": (options) => {
       options.server.middlewares.use(devServerMiddleware(elmCompilerOptions));
@@ -20,9 +23,9 @@ export default (
         elmCompilerOptions.optimize = true;
       }
       addRenderer({
-        name: "elm-astro-integration",
-        serverEntrypoint: "elm-astro-integration/elm-server.js",
-        clientEntrypoint: "elm-astro-integration/elm-client.js",
+        name: "astro-integration-elm",
+        serverEntrypoint: "astro-integration-elm/elm-server.js",
+        clientEntrypoint: "astro-integration-elm/elm-client.js",
       });
       updateConfig({
         vite: { plugins: [elmPlugin(elmCompilerOptions)] },

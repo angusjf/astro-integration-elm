@@ -1,14 +1,13 @@
 {
-  "name": "elm-astro-integration",
+  "name": "astro-integration-elm",
   "description": "Use Elm components within Astro",
   "version": "0.0.1",
-  "type": "module",
-  "types": "./dist/index.d.ts",
   "author": "angusjf",
+  "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/angusjf/elm-astro-integration.git"
+    "url": "https://github.com/angusjf/astro-integration-elm.git"
   },
   "keywords": [
     "astro-integration",
@@ -16,12 +15,13 @@
     "renderer",
     "elm"
   ],
-  "bugs": "https://github.com/angusjf/elm-astro-integration/issues",
+  "bugs": "https://github.com/angusjf/astro-integration-elm/issues",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
     "elm-server.js",
     "elm-client.js",
+    "index.d.ts",
     "index.js"
   ],
   "scripts": {

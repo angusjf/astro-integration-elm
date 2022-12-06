@@ -9,6 +9,7 @@ async function renderToStaticMarkup(Component, props, slotted) {
   const dom = new JSDOM(
     `<html><head></head><body><div id="app"></div></body></html>`
   );
+
   const document = dom.window.document;
 
   global.document.createElementNS = (...args) => {
