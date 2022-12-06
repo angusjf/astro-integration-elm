@@ -1,4 +1,3 @@
-
 ## Elm integration
 
 ### First Steps
@@ -7,7 +6,8 @@
 
 Astro `props` map very neatly onto Elm `flags`, and an Astro component (or island) is a good fit for an Elm `element`.
 
-__`------------- index.astro ------------- `__
+**`------------- index.astro ------------- `**
+
 ```jsx
 ---
 import Counter from "../components/Counter.elm";
@@ -34,8 +34,8 @@ import Counter from "../components/Counter.elm";
 </style>
 ```
 
+**`------------- Counter.elm ------------- `**
 
-__`------------- Counter.elm ------------- `__
 ```elm
 module Counter exposing (main)
 
@@ -81,10 +81,10 @@ view count =
 
 Elm's `Browser` module contains 4 functions to create an Elm program.
 
- - `Browser.sandbox`
- - `Browser.element`
- - `Browser.document`
- - `Browser.application`
+- `Browser.sandbox`
+- `Browser.element`
+- `Browser.document`
+- `Browser.application`
 
 You can `sandbox` & `element` with ease. Using `document` is more nuanced, as it takes over the DOM's `document.body` element. It will work, but it will remove all body content in your Astro file, so be careful! You can only use one `document` at a time, which I suppose makes sense.
 
@@ -127,3 +127,7 @@ This can be a **huge security vulnerability**. Do not allow interpolate user-gen
 🚨 I repeat - **do not** put anything except trusted code in this string.
 
 Much like Astro's [`set:html`](https://docs.astro.build/en/reference/directives-reference/#sethtml) or React's `dangerouslySetInnerHTML`, this opens you up to XSS attacks.
+
+### Production build
+
+`astro-integration-elm` with automatically run the Elm compiler in optimised mode when you run a full (non dev) build. You override this, or add other Elm compiler settings to the integration as parameters to the `elm()` function.
