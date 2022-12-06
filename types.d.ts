@@ -20,6 +20,11 @@ declare module "node-elm-compiler" {
     elmSource: string,
     elmCompilerOptions: ElmCompilerOptions
   ): string;
+
+  async function compileToString(
+    filename: string,
+    elmCompilerOptions: ElmCompilerOptions
+  ): Promise<string>;
 }
 
 declare module "elm-esm" {

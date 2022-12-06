@@ -1,5 +1,5 @@
 import { AstroIntegration } from "astro";
-import { ElmCompilerOptions, compileToStringSync } from "node-elm-compiler";
+import { ElmCompilerOptions, compileToString } from "node-elm-compiler";
 import { toESModule } from "elm-esm";
 import { Connect, Plugin } from "vite";
 
@@ -11,7 +11,14 @@ export default (
     "astro:server:setup": (options) => {
       options.server.middlewares.use(devServerMiddleware(elmCompilerOptions));
     },
-    "astro:config:setup": ({ addRenderer, updateConfig }) => {
+    "astro:config:setup": ({ command, addRenderer, updateConfig }) => {
+      if (
+        command !== "dev" &&
+        !elmCompilerOptions.debug &&
+        elmCompilerOptions.optimize === undefined
+      ) {
+        elmCompilerOptions.optimize = true;
+      }
       addRenderer({
         name: "elm-astro-integration",
         serverEntrypoint: "elm-astro-integration/elm-server.js",
@@ -26,7 +33,7 @@ export default (
 
 const elmPlugin = (elmCompilerOptions: ElmCompilerOptions): Plugin => ({
   name: "vite-plugin-elm",
-  transform(code, id, _: unknown) {
+  async transform(code, id, options) {
     if (!id.endsWith(".elm")) return;
     return compile(id, elmCompilerOptions);
   },
@@ -34,10 +41,10 @@ const elmPlugin = (elmCompilerOptions: ElmCompilerOptions): Plugin => ({
 
 const devServerMiddleware =
   (elmCompilerOptions: ElmCompilerOptions): Connect.NextHandleFunction =>
-  (req, res, next) => {
+  async (req, res, next) => {
     if (req.originalUrl?.endsWith(".elm")) {
-      const filename = (req.originalUrl as string).replace("/@fs", "");
-      const compiled = compile(filename, elmCompilerOptions);
+      const filename = req.originalUrl.replace("/@fs", "");
+      const compiled = await compile(filename, elmCompilerOptions);
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/javascript");
       res.end(compiled);
@@ -46,14 +53,18 @@ const devServerMiddleware =
     }
   };
 
-const compile = (filename: string, options: ElmCompilerOptions): string => {
-  const out = toESModule(compileToStringSync(filename, options));
+const compile = async (
+  filename: string,
+  options: ElmCompilerOptions
+): Promise<string> => {
+  const compiled = await compileToString(filename, options);
+  const esModule = toESModule(compiled);
   return `
     try {
       global.document = {}
       global.XMLHttpRequest = {}
     } catch (e) {}
-    ${out}      
+    ${esModule}      
     export default {
       $$elm: true,
       ...Elm[Object.keys(Elm)[0]]
