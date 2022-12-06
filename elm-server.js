@@ -6,27 +6,29 @@ function check(Component) {
 }
 
 async function renderToStaticMarkup(Component, props, slotted) {
-  const dom = new JSDOM(`<html><head></head><body><div id="app"></div></body></html>`);
+  const dom = new JSDOM(
+    `<html><head></head><body><div id="app"></div></body></html>`
+  );
   const document = dom.window.document;
 
-  global.document.createElementNS = (...x) => {
-    return document.createElementNS(...x)
-  };
-  
-  global.document.replaceChild = (...x) => {
-    return document.replaceChild(...x);
+  global.document.createElementNS = (...args) => {
+    return document.createElementNS(...args);
   };
 
-  global.document.createTextNode = (...x) =>{
-    return document.createTextNode(...x);
+  global.document.replaceChild = (...args) => {
+    return document.replaceChild(...args);
   };
 
-  global.document.createElement = (...x) => {
-    return document.createElement(...x);
+  global.document.createTextNode = (...args) => {
+    return document.createTextNode(...args);
   };
 
-  global.document.createDocumentFragment = (...x) => {
-    return document.createDocumentFragment (...x);
+  global.document.createElement = (...args) => {
+    return document.createElement(...args);
+  };
+
+  global.document.createDocumentFragment = (...args) => {
+    return document.createDocumentFragment(...args);
   };
 
   global.document.body = document.body;
@@ -34,14 +36,14 @@ async function renderToStaticMarkup(Component, props, slotted) {
   global.document.title = document.title;
 
   global.XMLHttpRequest = XMLHttpRequest;
-  
+
   Component.init({
-    node: document.getElementById('app'),
-    flags: props
+    node: document.getElementById("app"),
+    flags: props,
   });
 
   return {
-    html: dom.serialize()
+    html: dom.serialize(),
   };
 }
 

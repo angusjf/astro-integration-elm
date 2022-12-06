@@ -27,6 +27,7 @@
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
+    "@types/node": "^18.11.11",
     "astro": "^1.6.12",
     "vite": "^3.2.5"
   },
