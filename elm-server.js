@@ -44,7 +44,7 @@ async function renderToStaticMarkup(Component, props, slotted) {
   });
 
   return {
-    html: dom.toString(),
+    html: document.toString(),
   };
 }
 
