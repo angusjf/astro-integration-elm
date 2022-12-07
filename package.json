@@ -1,7 +1,7 @@
 {
   "name": "astro-integration-elm",
   "description": "Use Elm components within Astro",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "angusjf",
   "type": "module",
   "license": "MIT",
