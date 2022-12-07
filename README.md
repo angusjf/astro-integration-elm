@@ -4,6 +4,8 @@ This **[Astro integration](https://docs.astro.build/en/guides/integrations-guide
 
 ## Installation
 
+⚠️ To use this integration your project must be using astro version 1.6 or greater.
+
 First, once you have [set up your Astro project](https://docs.astro.build/en/getting-started/#start-your-first-project), install the `astro-integration-elm` package:
 
 ```sh
