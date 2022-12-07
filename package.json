@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "elm-esm": "^1.1.4",
-    "jsdom": "^20.0.3",
+    "linkedom": "^0.14.21",
     "node-elm-compiler": "^5.0.6",
     "xmlhttprequest": "^1.8.0"
   },
@@ -39,6 +39,7 @@
     "vite": "^3.2.5"
   },
   "peerDependencies": {
+    "astro": ">=1.6.0",
     "elm": "^0.19.1-5"
   }
 }

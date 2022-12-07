@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom";
+import { parseHTML } from "linkedom";
 import { XMLHttpRequest } from "xmlhttprequest";
 
 function check(Component) {
@@ -6,7 +6,7 @@ function check(Component) {
 }
 
 async function renderToStaticMarkup(Component, props, slotted) {
-  const dom = new JSDOM(
+  const dom = parseHTML(
     `<html><head></head><body><div id="app"></div></body></html>`
   );
 
@@ -44,7 +44,7 @@ async function renderToStaticMarkup(Component, props, slotted) {
   });
 
   return {
-    html: dom.serialize(),
+    html: dom.toString(),
   };
 }
 
