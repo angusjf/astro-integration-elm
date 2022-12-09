@@ -1,12 +1,16 @@
-## Elm integration
+# Elm Integration Guide
 
-### First Steps
+## API Guide & Compiler Configuration
 
-### Using Flags
+The API for the `astro-integration-elm` package is very minimal, as only one function, the integration, is exported.  The typescript typings for this are pretty weak currently, but the arguments are just forwarded to [rtfeldman/node-elm-compiler](https://github.com/rtfeldman/node-elm-compiler).
+
+The integration will automatically run the Elm compiler in optimised mode when you run a full (non dev) build. You can override this, or add other Elm compiler settings to the integration as parameters to the `elm()` function.
+
+## Using Flags
 
 Astro `props` map very neatly onto Elm `flags`, and an Astro component (or island) is a good fit for an Elm `element`.
 
-**`------------- index.astro ------------- `**
+_index.astro_
 
 ```jsx
 ---
@@ -34,7 +38,7 @@ import Counter from "../components/Counter.elm";
 </style>
 ```
 
-**`------------- Counter.elm ------------- `**
+_Counter.elm_
 
 ```elm
 module Counter exposing (main)
@@ -77,7 +81,7 @@ view count =
       ]
 ```
 
-### Which kinds of Elm program can I include?
+## Which kinds of Elm program can I include?
 
 Elm's `Browser` module contains 4 functions to create an Elm program.
 
@@ -90,7 +94,7 @@ You can `sandbox` & `element` with ease. Using `document` is more nuanced, as it
 
 The `application` function is not supported, as it is designed for SPAs, and doesn't appear to be a good fit for Astro. This may change in a future release.
 
-### Advanced: Using `ports`
+## Advanced: Using `ports`
 
 Elm's ports are a great way to use web APIs that aren't available in Elm.
 
@@ -127,7 +131,3 @@ This can be a **huge security vulnerability**. Do not allow interpolate user-gen
 🚨 I repeat - **do not** put anything except trusted code in this string.
 
 Much like Astro's [`set:html`](https://docs.astro.build/en/reference/directives-reference/#sethtml) or React's `dangerouslySetInnerHTML`, this opens you up to XSS attacks.
-
-### Production build
-
-`astro-integration-elm` with automatically run the Elm compiler in optimised mode when you run a full (non dev) build. You override this, or add other Elm compiler settings to the integration as parameters to the `elm()` function.
