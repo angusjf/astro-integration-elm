@@ -8,7 +8,29 @@ The integration will automatically run the Elm compiler in optimised mode when y
 
 ## Using Flags
 
-Astro `props` map very neatly onto Elm `flags`, and an Astro component (or island) is a good fit for an Elm `element`.
+Astro `props` map very neatly onto Elm `flags`, and an Astro component (or island) is a good fit for an Elm `element`. The integration simply calls the `init` function, which can take the props as either:
+- A `Json.Decode.Value`, which you can **safely** de-serialize as you would regular JSON.
+- A custom record type, which will be **unsafely** converted from JSON to an Elm type (automatically).
+
+Both of these approaches look the same from the Astro side, which one you are using depends on the type of your `init` function:
+
+```elm
+import Json.Decode
+
+init : Decode.Value -> ( Model, Cmd msg )
+
+-- vs --
+
+init : { class : Maybe String, count : Int } -> ( Model, Cmd msg )
+```
+
+Using a custom record type is **dangerous** if you're server side rendering: if the wrong types are passed, your page will not render for that request. However, if you're generating a static site, it's safe to use record types - an issue with the flag types will only cause a "build time error".
+
+## Default Flags
+
+If a `<style>` tag is included in the parent Astro component, astro will pass a `class` prop to the Elm component as a prop - you can access this like any other flag.
+
+## More Complex Example: Props & `client:load`
 
 _index.astro_
 
