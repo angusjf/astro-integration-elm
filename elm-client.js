@@ -1,11 +1,13 @@
 export default (target) => {
   return (Component, { unsafeSetup, ...props }) => {
-    if (!target.hasAttribute('ssr')) return;
+    if (!target.hasAttribute("ssr")) return;
+
+    props.server = props.server ?? false;
 
     const app = Component.init({
       node: target,
-      flags: props
-    })
+      flags: props,
+    });
 
     if (unsafeSetup) {
       eval(unsafeSetup)(app);

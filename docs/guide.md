@@ -2,13 +2,14 @@
 
 ## API Guide & Compiler Configuration
 
-The API for the `astro-integration-elm` package is very minimal, as only one function, the integration, is exported.  The typescript typings for this are pretty weak currently, but the arguments are just forwarded to [rtfeldman/node-elm-compiler](https://github.com/rtfeldman/node-elm-compiler).
+The API for the `astro-integration-elm` package is very minimal, as only one function, the integration, is exported. The typescript typings for this are pretty weak currently, but the arguments are just forwarded to [rtfeldman/node-elm-compiler](https://github.com/rtfeldman/node-elm-compiler).
 
 The integration will automatically run the Elm compiler in optimised mode when you run a full (non dev) build. You can override this, or add other Elm compiler settings to the integration as parameters to the `elm()` function.
 
 ## Using Flags
 
 Astro `props` map very neatly onto Elm `flags`, and an Astro component (or island) is a good fit for an Elm `element`. The integration simply calls the `init` function, which can take the props as either:
+
 - A `Json.Decode.Value`, which you can **safely** de-serialize as you would regular JSON.
 - A custom record type, which will be **unsafely** converted from JSON to an Elm type (automatically).
 
@@ -26,9 +27,40 @@ init : { class : Maybe String, count : Int } -> ( Model, Cmd msg )
 
 Using a custom record type is **dangerous** if you're server side rendering: if the wrong types are passed, your page will not render for that request. However, if you're generating a static site, it's safe to use record types - an issue with the flag types will only cause a "build time error".
 
-## Default Flags
+## Default Flags (`class` & `server`)
 
-If a `<style>` tag is included in the parent Astro component, astro will pass a `class` prop to the Elm component as a prop - you can access this like any other flag.
+The integration automatically adds a flag, called `"server"`, which is set to `true` when your component is being rendered on the server and false if on the client-side.
+
+If a `<style>` tag is included in the parent Astro component, astro will pass a `class` prop to the Elm component - you can access this like any other flag.
+
+```html
+<style>
+  #my-elm-component {
+    font-style: italic;
+    border: 1px solid red;
+  }
+</style>
+<StyledComponent client:load />
+```
+
+```elm
+module StyledComponent exposing (..)
+
+import Html exposing (div)
+import Html.Attributes exposing (class, id)
+
+init : { class : String } -> ( { class : String }, Cmd msg )
+
+-- ...
+
+view model =
+  div
+    [ class model.class
+    , id "my-elm-component"
+    ]
+    [ -- ...
+    ]
+```
 
 ## More Complex Example: Props & `client:load`
 
