@@ -5,6 +5,33 @@ function check(Component) {
   return Component.$$elm;
 }
 
+function addEventListener() {}
+
+function addListeners(node) {
+  node.addEventListener = addEventListener;
+
+  let parent = { current: node.parentNode };
+
+  Object.defineProperty(node, "parentNode", {
+    get() {
+      return parent.current;
+    },
+    set(newParent) {
+      parent.current = newParent;
+    },
+  });
+
+  let value = { current: node.value };
+  Object.defineProperty(node, "value", {
+    get() {
+      return value.current;
+    },
+    set(newValue) {
+      value.current = newValue;
+    },
+  });
+}
+
 async function renderToStaticMarkup(Component, props, slotted) {
   const dom = parseHTML(
     `<html><head></head><body><div id="app"></div></body></html>`
@@ -13,24 +40,37 @@ async function renderToStaticMarkup(Component, props, slotted) {
   const document = dom.window.document;
 
   global.document.createElementNS = (...args) => {
-    return document.createElementNS(...args);
+    const node = document.createElementNS(...args);
+    addListeners(node);
+    return node;
   };
 
   global.document.replaceChild = (...args) => {
-    return document.replaceChild(...args);
+    const node = document.replaceChild(...args);
+    addListeners(node);
+    return node;
   };
 
   global.document.createTextNode = (...args) => {
-    return document.createTextNode(...args);
+    const node = document.createTextNode(...args);
+    addListeners(node);
+    return node;
   };
 
   global.document.createElement = (...args) => {
-    return document.createElement(...args);
+    const node = document.createElement(...args);
+    addListeners(node);
+    return node;
   };
 
   global.document.createDocumentFragment = (...args) => {
-    return document.createDocumentFragment(...args);
+    const node = document.createDocumentFragment(...args);
+    addListeners(node);
+    return node;
   };
+
+  addListeners(global.document);
+  addListeners(document.body);
 
   global.document.body = document.body;
 
