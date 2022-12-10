@@ -40,10 +40,17 @@ async function renderToStaticMarkup(Component, props, slotted) {
 
   props.server = true;
 
-  Component.init({
-    node: document.getElementById("app"),
-    flags: props,
-  });
+  try {
+    Component.init({
+      node: document.getElementById("app"),
+      flags: props,
+    });
+  } catch (e) {
+    // we allow `init` to fail, as the problem could be something that only
+    // happens on the server, and it will occur in the client's browser
+    console.error("Error server rending Elm component:");
+    console.error(e);
+  }
 
   return {
     html: document.toString(),
