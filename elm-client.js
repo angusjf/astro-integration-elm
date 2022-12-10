@@ -2,7 +2,7 @@ export default (target) => {
   return (Component, { unsafeSetup, ...props }) => {
     if (!target.hasAttribute("ssr")) return;
 
-    props.server = props.server ?? false;
+    props.server = false;
 
     const app = Component.init({
       node: target,

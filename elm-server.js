@@ -38,7 +38,7 @@ async function renderToStaticMarkup(Component, props, slotted) {
 
   global.XMLHttpRequest = XMLHttpRequest;
 
-  props.server = props.server ?? true;
+  props.server = true;
 
   Component.init({
     node: document.getElementById("app"),
