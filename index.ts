@@ -51,6 +51,25 @@ const devServerMiddleware =
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/javascript");
       res.end(compiled);
+    } else if (
+      req.originalUrl?.includes("astro-integration-elm_elm-client__js")
+    ) {
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/javascript");
+      let content = `
+      const elmClient = target => (Component, {unsafeSetup, ...props}) => {
+          if (!target.hasAttribute("ssr"))
+              return;
+          props.server = !1;
+          const app = Component.init({
+              node: target,
+              flags: props
+          });
+          unsafeSetup && eval(unsafeSetup)(app)
+      };
+      export { elmClient as default };
+      `;
+      res.end(content);
     } else {
       next();
     }
