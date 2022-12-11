@@ -66,6 +66,8 @@ const compile = async (
     try {
       global.document = {}
       global.XMLHttpRequest = {}
+      global.requestAnimationFrame = () => undefined
+      global.setTimeout = () => undefined
     } catch (e) {}
     ${esModule}      
     export default {

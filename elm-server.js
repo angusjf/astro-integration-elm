@@ -1,9 +1,16 @@
 import { parseHTML } from "linkedom";
 import { XMLHttpRequest } from "xmlhttprequest";
 
+const trueSetTimeout = setTimeout;
+const trueRequestAnimationFrame = requestAnimationFrame;
+
 function check(Component) {
   return Component.$$elm;
 }
+
+function requestAnimationFrame(callback) {}
+
+function setTimeout(callback, millis) {}
 
 function addEventListener() {}
 
@@ -12,24 +19,28 @@ function addListeners(node) {
 
   let parent = { current: node.parentNode };
 
-  Object.defineProperty(node, "parentNode", {
-    get() {
-      return parent.current;
-    },
-    set(newParent) {
-      parent.current = newParent;
-    },
-  });
+  if (!Object.getOwnPropertyDescriptor(node, "parentNode")?.set) {
+    Object.defineProperty(node, "parentNode", {
+      get() {
+        return parent.current;
+      },
+      set(newParent) {
+        parent.current = newParent;
+      },
+    });
+  }
 
-  let value = { current: node.value };
-  Object.defineProperty(node, "value", {
-    get() {
-      return value.current;
-    },
-    set(newValue) {
-      value.current = newValue;
-    },
-  });
+  if (!Object.getOwnPropertyDescriptor(node, "value")?.set) {
+    let value = { current: node.value };
+    Object.defineProperty(node, "value", {
+      get() {
+        return value.current;
+      },
+      set(newValue) {
+        value.current = newValue;
+      },
+    });
+  }
 }
 
 async function renderToStaticMarkup(Component, props, slotted) {
@@ -78,6 +89,10 @@ async function renderToStaticMarkup(Component, props, slotted) {
 
   global.XMLHttpRequest = XMLHttpRequest;
 
+  global.requestAnimationFrame = requestAnimationFrame;
+
+  global.setTimeout = setTimeout;
+
   props.server = true;
 
   try {
@@ -91,6 +106,9 @@ async function renderToStaticMarkup(Component, props, slotted) {
     console.error("Error server rending Elm component:");
     console.error(e);
   }
+
+  global.setTimeout = trueSetTimeout;
+  global.requestAnimationFrameout = trueRequestAnimationFrame;
 
   return {
     html: document.toString(),
