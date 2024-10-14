@@ -1,3 +1,4 @@
+import { join } from "path";
 import { AstroIntegration } from "astro";
 import type { ElmCompilerOptions } from "node-elm-compiler";
 import nodeElm from "node-elm-compiler";
@@ -46,7 +47,8 @@ const devServerMiddleware =
   (elmCompilerOptions: ElmCompilerOptions): Connect.NextHandleFunction =>
   async (req, res, next) => {
     if (req.originalUrl?.endsWith(".elm")) {
-      const filename = req.originalUrl.replace("/@fs", "");
+      const originalUrl = req.originalUrl.replace("/@fs", "");
+      const filename = `${join(process.cwd(), originalUrl)}`;
       const compiled = await compile(filename, elmCompilerOptions);
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/javascript");
